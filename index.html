@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>Фотогалерея</title>
-	<meta name="robots" content="noindex, nofollow">
     <style>
         :root {
             --bg: #18181a;
@@ -12,7 +12,6 @@
             --text: #f2f2f2;
             --muted: #9e9ea4;
             --chocolate: #4d2814;
-            --chocolate-hover: #63351c;
             --border: #2e2e32;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -22,8 +21,6 @@
             color: var(--text);
             line-height: 1.5;
         }
-
-        /* Обложка с шоколадным оттенком */
         .hero {
             position: relative;
             height: 85vh;
@@ -88,8 +85,6 @@
             color: var(--chocolate);
             border-color: #fff;
         }
-
-        /* Темно-графитовая панель управления */
         .toolbar {
             position: sticky;
             top: 0;
@@ -133,8 +128,6 @@
             color: #fff;
             border-color: #754226;
         }
-
-        /* Сетка фотографий (Masonry) */
         .container {
             max-width: 1440px;
             margin: 0 auto;
@@ -146,7 +139,6 @@
         }
         @media (max-width: 900px) { .gallery { column-count: 2; } }
         @media (max-width: 540px) { .gallery { column-count: 1; } }
-
         .photo-card {
             break-inside: avoid;
             margin-bottom: 16px;
@@ -161,7 +153,6 @@
             transition: transform 0.4s ease;
         }
         .photo-card:hover img { transform: scale(1.02); }
-
         .card-overlay {
             position: absolute;
             top: 10px;
@@ -173,7 +164,6 @@
         }
         .photo-card:hover .card-overlay,
         .photo-card.is-fav .card-overlay { opacity: 1; }
-
         .icon-btn {
             width: 36px;
             height: 36px;
@@ -195,8 +185,6 @@
             background: #fff;
             color: #e53935;
         }
-
-        /* Лайтбокс (просмотр на весь экран) */
         .lightbox {
             position: fixed;
             inset: 0;
@@ -231,7 +219,6 @@
             color: var(--muted);
             font-size: 13px;
         }
-
         .status-msg {
             text-align: center;
             padding: 60px 20px;
@@ -285,9 +272,6 @@
 </div>
 
 <script>
-    // ==========================================
-    // НАСТРОЙКИ ГАЛЕРЕИ
-    // ==========================================
     const CONFIG = {
         apiKey: "AIzaSyBKXbCXx1wTpOTanZN7f7SIKRN-IX6jMBw",
         folderId: "1_PkAzgj09AeG3lEGH7zW-o4h3pCZurST",
@@ -296,43 +280,47 @@
         author: "Грудкин Андрей • breed.dry@gmail.com",
         storageUntil: ""
     };
-    // ==========================================
 
-    document.title = `${CONFIG.title} — ${CONFIG.date}`;
+    document.title = CONFIG.title + " — " + CONFIG.date;
     document.getElementById('shootTitle').textContent = CONFIG.title;
     document.getElementById('shootDate').textContent = CONFIG.date;
     document.getElementById('authorInfo').textContent = CONFIG.author;
     document.getElementById('footerText').textContent = CONFIG.author;
     document.getElementById('storageNotice').textContent = CONFIG.storageUntil;
-    document.getElementById('downloadAllLink').href = `https://google.com{CONFIG.folderId}`;
+    document.getElementById('downloadAllLink').href = "https://google.com" + CONFIG.folderId;
 
     let photos = [];
-    let favorites = JSON.parse(localStorage.getItem(`fav_${CONFIG.folderId}`) || '[]');
+    let favorites = JSON.parse(localStorage.getItem("fav_" + CONFIG.folderId) || "[]");
     let showOnlyFavs = false;
     let currentIndex = 0;
 
     async function loadPhotos() {
         const statusEl = document.getElementById('status');
         try {
-            const query = encodeURIComponent(`'${CONFIG.folderId}' in parents and mimeType contains 'image/' and trashed = false`);
-const url = https://googleapis.com{query}&fields=files(id,name)&orderBy=name&pageSize=1000&key=${CONFIG.apiKey};
-const res = await fetch(url);
-const data = await res.json();
-if (data.error) {
-throw new Error(data.error.message);
-}
-photos = data.files || [];
-if (photos.length === 0) {
+            const query = encodeURIComponent("'" + CONFIG.folderId + "' in parents and mimeType contains 'image/' and trashed = false");
+            const url = "https://googleapis.com" + query + "&fields=files(id,name)&orderBy=name&pageSize=1000&key=" + CONFIG.apiKey;
+            
+            const res = await fetch(url);
+            const data = await res.json();
+
+            if (data.error) {
+                throw new Error(data.error.message);
+            }
+
+            photos = data.files || [];
+            if (photos.length === 0) 
+{
 statusEl.textContent = "В папке пока нет фотографий или к ней не открыт общий доступ.";
 return;
 }
-const coverUrl = https://google.com{photos.id}&sz=w2000;
-document.getElementById('hero').style.backgroundImage = url('${coverUrl}');
+const coverUrl = "google.com" + photos[0].id + "&sz=w2000";
+document.getElementById('hero').style.backgroundImage = "url('" + coverUrl + "')";
 statusEl.style.display = 'none';
 updateFavCounter();
 renderGallery();
 } catch (err) {
-statusEl.innerHTML = Ошибка загрузки: ${err.message}<br><small>Проверьте API Key, ID папки и общий доступ по ссылке.</small>;
+statusEl.innerHTML = "Ошибка загрузки: " + err.message + "
+Проверьте API Key, ID папки и общий доступ по ссылке.";
 }
 }
 function renderGallery() {
@@ -342,10 +330,15 @@ const list = showOnlyFavs ? photos.filter(p => favorites.includes(p.name)) : pho
 list.forEach((photo) => {
 const isFav = favorites.includes(photo.name);
 const card = document.createElement('div');
-card.className = photo-card ${isFav ? 'is-fav' : ''};
-const thumbUrl = https://google.com{photo.id}&sz=w1000;
-const downloadUrl = https://google.com{photo.id};
-card.innerHTML = <img src="${thumbUrl}" alt="${photo.name}" loading="lazy" onclick="openLightbox('${photo.id}')"> <div class="card-overlay"> <button class="icon-btn ${isFav ? 'fav-active' : ''}" title="В избранное" onclick="toggleFavorite(event, '${photo.name}')">♥</button> <a class="icon-btn" href="${downloadUrl}" title="Скачать оригинал" target="_blank" onclick="event.stopPropagation()">↓</a> </div>;
+card.className = "photo-card " + (isFav ? "is-fav" : "");
+const thumbUrl = "google.com" + photo.id + "&sz=w1000";
+const downloadUrl = "google.com" + photo.id;
+card.innerHTML =
+'' +
+'' +
+'♥' +
+'↓' +
+'';
 gallery.appendChild(card);
 });
 }
@@ -356,7 +349,7 @@ favorites = favorites.filter(f => f !== fileName);
 } else {
 favorites.push(fileName);
 }
-localStorage.setItem(fav_${CONFIG.folderId}, JSON.stringify(favorites));
+localStorage.setItem("fav_" + CONFIG.folderId, JSON.stringify(favorites));
 updateFavCounter();
 renderGallery();
 }
@@ -373,7 +366,7 @@ if (favorites.length === 0) {
 alert('Вы еще не отметили ни одной фотографии сердечком.');
 return;
 }
-const text = Отобранные фото (${favorites.length} шт.):\n + favorites.join('\n');
+const text = "Отобранные фото (" + favorites.length + " шт.):\n" + favorites.join("\n");
 navigator.clipboard.writeText(text).then(() => {
 alert('Список имен файлов скопирован! Отправьте его фотографу в мессенджер.');
 });
@@ -392,8 +385,8 @@ updateLightbox();
 }
 function updateLightbox() {
 const photo = photos[currentIndex];
-document.getElementById('lbImg').src = https://google.com{photo.id}&sz=w2000;
-document.getElementById('lbCaption').textContent = ${photo.name} (${currentIndex + 1} из ${photos.length});
+document.getElementById('lbImg').src = "google.com" + photo.id + "&sz=w2000";
+document.getElementById('lbCaption').textContent = photo.name + " (" + (currentIndex + 1) + " из " + photos.length + ")";
 }
 document.addEventListener('keydown', (e) => {
 if (!document.getElementById('lightbox').classList.contains('open')) return;
@@ -402,3 +395,7 @@ if (e.key === 'ArrowRight') changePhoto(1);
 if (e.key === 'ArrowLeft') changePhoto(-1);
 });
 loadPhotos();
+</script>
+
+</body>
+</html>
