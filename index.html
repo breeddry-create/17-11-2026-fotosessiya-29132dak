@@ -15,6 +15,7 @@
             --border: #2e2e32;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background: var(--bg);
@@ -43,11 +44,7 @@
             background: linear-gradient(180deg, rgba(77, 40, 20, 0.58) 0%, rgba(45, 22, 10, 0.72) 100%);
             z-index: 1;
         }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-        }
+        .hero-content { position: relative; z-index: 2; max-width: 800px; }
         .hero-date {
             font-size: 14px;
             letter-spacing: 3px;
@@ -62,11 +59,7 @@
             text-transform: uppercase;
             margin-bottom: 12px;
         }
-        .hero-author {
-            font-size: 15px;
-            color: #e6cfc3;
-            margin-bottom: 36px;
-        }
+        .hero-author { font-size: 15px; color: #e6cfc3; margin-bottom: 36px; }
         .btn-outline {
             display: inline-block;
             padding: 14px 36px;
@@ -80,11 +73,7 @@
             cursor: pointer;
             background: rgba(77, 40, 20, 0.35);
         }
-        .btn-outline:hover {
-            background: #fff;
-            color: var(--chocolate);
-            border-color: #fff;
-        }
+        .btn-outline:hover { background: #fff; color: var(--chocolate); border-color: #fff; }
         .toolbar {
             position: sticky;
             top: 0;
@@ -99,15 +88,8 @@
             align-items: center;
             gap: 12px;
         }
-        .toolbar-info {
-            font-size: 13px;
-            color: var(--muted);
-        }
-        .toolbar-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+        .toolbar-info { font-size: 13px; color: var(--muted); }
+        .toolbar-actions { display: flex; gap: 10px; flex-wrap: wrap; }
         .btn-action {
             padding: 8px 16px;
             font-size: 13px;
@@ -119,24 +101,10 @@
             text-decoration: none;
             transition: 0.2s;
         }
-        .btn-action:hover {
-            border-color: #7a5c4d;
-            background: #2b2b2f;
-        }
-        .btn-action.active {
-            background: var(--chocolate);
-            color: #fff;
-            border-color: #754226;
-        }
-        .container {
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 24px;
-        }
-        .gallery {
-            column-count: 3;
-            column-gap: 16px;
-        }
+        .btn-action:hover { border-color: #7a5c4d; background: #2b2b2f; }
+        .btn-action.active { background: var(--chocolate); color: #fff; border-color: #754226; }
+        .container { max-width: 1440px; margin: 0 auto; padding: 24px; }
+        .gallery { column-count: 3; column-gap: 16px; }
         @media (max-width: 900px) { .gallery { column-count: 2; } }
         @media (max-width: 540px) { .gallery { column-count: 1; } }
         .photo-card {
@@ -146,12 +114,9 @@
             overflow: hidden;
             background: var(--surface);
             cursor: zoom-in;
+            min-height: 120px;
         }
-        .photo-card img {
-            width: 100%;
-            display: block;
-            transition: transform 0.4s ease;
-        }
+        .photo-card img { width: 100%; display: block; transition: transform 0.4s ease; }
         .photo-card:hover img { transform: scale(1.02); }
         .card-overlay {
             position: absolute;
@@ -164,6 +129,7 @@
         }
         .photo-card:hover .card-overlay,
         .photo-card.is-fav .card-overlay { opacity: 1; }
+        @media (hover: none) { .card-overlay { opacity: 1; } }
         .icon-btn {
             width: 36px;
             height: 36px;
@@ -181,10 +147,7 @@
             transition: 0.2s;
         }
         .icon-btn:hover { background: var(--chocolate); }
-        .icon-btn.fav-active {
-            background: #fff;
-            color: #e53935;
-        }
+        .icon-btn.fav-active { background: #fff; color: #e53935; }
         .lightbox {
             position: fixed;
             inset: 0;
@@ -195,11 +158,7 @@
             align-items: center;
         }
         .lightbox.open { display: flex; }
-        .lightbox img {
-            max-width: 92vw;
-            max-height: 88vh;
-            object-fit: contain;
-        }
+        .lightbox img { max-width: 92vw; max-height: 88vh; object-fit: contain; }
         .lb-close, .lb-prev, .lb-next {
             position: absolute;
             background: none;
@@ -213,17 +172,8 @@
         .lb-close { top: 10px; right: 16px; }
         .lb-prev { left: 10px; }
         .lb-next { right: 10px; }
-        .lb-caption {
-            position: absolute;
-            bottom: 16px;
-            color: var(--muted);
-            font-size: 13px;
-        }
-        .status-msg {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--muted);
-        }
+        .lb-caption { position: absolute; bottom: 16px; color: var(--muted); font-size: 13px; }
+        .status-msg { text-align: center; padding: 60px 20px; color: var(--muted); }
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -250,7 +200,7 @@
     <div class="toolbar-actions">
         <button class="btn-action" id="filterFavBtn" onclick="toggleFavFilter()">❤️ Избранное (<span id="favCount">0</span>)</button>
         <button class="btn-action" onclick="copyFavorites()">📋 Скопировать список для ретуши</button>
-        <a class="btn-action" id="downloadAllLink" target="_blank">⬇️ Открыть папку на Диске</a>
+        <a class="btn-action" id="downloadAllLink" target="_blank" rel="noopener">⬇️ Открыть папку на Диске</a>
     </div>
 </div>
 
@@ -281,25 +231,40 @@
         storageUntil: ""
     };
 
+    // Ссылки на Google Drive
+    const thumbUrl = (id, size) => "https://drive.google.com/thumbnail?id=" + id + "&sz=w" + size;
+    const downloadUrl = (id) => "https://drive.google.com/uc?export=download&id=" + id;
+
     document.title = CONFIG.title + " — " + CONFIG.date;
     document.getElementById('shootTitle').textContent = CONFIG.title;
     document.getElementById('shootDate').textContent = CONFIG.date;
     document.getElementById('authorInfo').textContent = CONFIG.author;
     document.getElementById('footerText').textContent = CONFIG.author;
     document.getElementById('storageNotice').textContent = CONFIG.storageUntil;
-    document.getElementById('downloadAllLink').href = "https://google.com" + CONFIG.folderId;
+    document.getElementById('downloadAllLink').href = "https://drive.google.com/drive/folders/" + CONFIG.folderId;
 
     let photos = [];
-    let favorites = JSON.parse(localStorage.getItem("fav_" + CONFIG.folderId) || "[]");
+    let favorites = [];
+    try {
+        favorites = JSON.parse(localStorage.getItem("fav_" + CONFIG.folderId) || "[]");
+    } catch (e) {
+        favorites = [];
+    }
     let showOnlyFavs = false;
     let currentIndex = 0;
+
+    function esc(s) {
+        return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
 
     async function loadPhotos() {
         const statusEl = document.getElementById('status');
         try {
-            const query = encodeURIComponent("'" + CONFIG.folderId + "' in parents and mimeType contains 'image/' and trashed = false");
-            const url = "https://googleapis.com" + query + "&fields=files(id,name)&orderBy=name&pageSize=1000&key=" + CONFIG.apiKey;
-            
+            const q = "'" + CONFIG.folderId + "' in parents and mimeType contains 'image/' and trashed = false";
+            const url = "https://www.googleapis.com/drive/v3/files?q=" + encodeURIComponent(q) +
+                "&fields=" + encodeURIComponent("files(id,name)") +
+                "&orderBy=name&pageSize=1000&key=" + CONFIG.apiKey;
+
             const res = await fetch(url);
             const data = await res.json();
 
@@ -308,93 +273,111 @@
             }
 
             photos = data.files || [];
-            if (photos.length === 0) 
-{
-statusEl.textContent = "В папке пока нет фотографий или к ней не открыт общий доступ.";
-return;
-}
-const coverUrl = "google.com" + photos[0].id + "&sz=w2000";
-document.getElementById('hero').style.backgroundImage = "url('" + coverUrl + "')";
-statusEl.style.display = 'none';
-updateFavCounter();
-renderGallery();
-} catch (err) {
-statusEl.innerHTML = "Ошибка загрузки: " + err.message + "
-Проверьте API Key, ID папки и общий доступ по ссылке.";
-}
-}
-function renderGallery() {
-const gallery = document.getElementById('gallery');
-gallery.innerHTML = '';
-const list = showOnlyFavs ? photos.filter(p => favorites.includes(p.name)) : photos;
-list.forEach((photo) => {
-const isFav = favorites.includes(photo.name);
-const card = document.createElement('div');
-card.className = "photo-card " + (isFav ? "is-fav" : "");
-const thumbUrl = "google.com" + photo.id + "&sz=w1000";
-const downloadUrl = "google.com" + photo.id;
-card.innerHTML =
-'' +
-'' +
-'♥' +
-'↓' +
-'';
-gallery.appendChild(card);
-});
-}
-function toggleFavorite(e, fileName) {
-e.stopPropagation();
-if (favorites.includes(fileName)) {
-favorites = favorites.filter(f => f !== fileName);
-} else {
-favorites.push(fileName);
-}
-localStorage.setItem("fav_" + CONFIG.folderId, JSON.stringify(favorites));
-updateFavCounter();
-renderGallery();
-}
-function updateFavCounter() {
-document.getElementById('favCount').textContent = favorites.length;
-}
-function toggleFavFilter() {
-showOnlyFavs = !showOnlyFavs;
-document.getElementById('filterFavBtn').classList.toggle('active', showOnlyFavs);
-renderGallery();
-}
-function copyFavorites() {
-if (favorites.length === 0) {
-alert('Вы еще не отметили ни одной фотографии сердечком.');
-return;
-}
-const text = "Отобранные фото (" + favorites.length + " шт.):\n" + favorites.join("\n");
-navigator.clipboard.writeText(text).then(() => {
-alert('Список имен файлов скопирован! Отправьте его фотографу в мессенджер.');
-});
-}
-function openLightbox(photoId) {
-currentIndex = photos.findIndex(p => p.id === photoId);
-updateLightbox();
-document.getElementById('lightbox').classList.add('open');
-}
-function closeLightbox() {
-document.getElementById('lightbox').classList.remove('open');
-}
-function changePhoto(step) {
-currentIndex = (currentIndex + step + photos.length) % photos.length;
-updateLightbox();
-}
-function updateLightbox() {
-const photo = photos[currentIndex];
-document.getElementById('lbImg').src = "google.com" + photo.id + "&sz=w2000";
-document.getElementById('lbCaption').textContent = photo.name + " (" + (currentIndex + 1) + " из " + photos.length + ")";
-}
-document.addEventListener('keydown', (e) => {
-if (!document.getElementById('lightbox').classList.contains('open')) return;
-if (e.key === 'Escape') closeLightbox();
-if (e.key === 'ArrowRight') changePhoto(1);
-if (e.key === 'ArrowLeft') changePhoto(-1);
-});
-loadPhotos();
+            if (photos.length === 0) {
+                statusEl.textContent = "В папке пока нет фотографий или к ней не открыт общий доступ.";
+                return;
+            }
+
+            document.getElementById('hero').style.backgroundImage = "url('" + thumbUrl(photos[0].id, 2000) + "')";
+            statusEl.style.display = 'none';
+            updateFavCounter();
+            renderGallery();
+        } catch (err) {
+            statusEl.innerHTML = "Ошибка загрузки: " + esc(err.message) +
+                "<br>Проверьте API Key, ID папки и общий доступ по ссылке.";
+        }
+    }
+
+    function renderGallery() {
+        const gallery = document.getElementById('gallery');
+        gallery.innerHTML = '';
+        const list = showOnlyFavs ? photos.filter(p => favorites.includes(p.name)) : photos;
+
+        list.forEach((photo) => {
+            const isFav = favorites.includes(photo.name);
+            const card = document.createElement('div');
+            card.className = "photo-card" + (isFav ? " is-fav" : "");
+
+            card.innerHTML =
+                '<img src="' + thumbUrl(photo.id, 1000) + '" alt="' + esc(photo.name) + '" loading="lazy" referrerpolicy="no-referrer">' +
+                '<div class="card-overlay">' +
+                    '<button class="icon-btn fav-btn' + (isFav ? ' fav-active' : '') + '" title="В избранное">♥</button>' +
+                    '<a class="icon-btn dl-btn" href="' + downloadUrl(photo.id) + '" target="_blank" rel="noopener" title="Скачать">↓</a>' +
+                '</div>';
+
+            card.addEventListener('click', () => openLightbox(photo.id));
+            card.querySelector('.fav-btn').addEventListener('click', (e) => toggleFavorite(e, photo.name));
+            card.querySelector('.dl-btn').addEventListener('click', (e) => e.stopPropagation());
+
+            gallery.appendChild(card);
+        });
+    }
+
+    function toggleFavorite(e, fileName) {
+        e.stopPropagation();
+        if (favorites.includes(fileName)) {
+            favorites = favorites.filter(f => f !== fileName);
+        } else {
+            favorites.push(fileName);
+        }
+        try {
+            localStorage.setItem("fav_" + CONFIG.folderId, JSON.stringify(favorites));
+        } catch (err) {}
+        updateFavCounter();
+        renderGallery();
+    }
+
+    function updateFavCounter() {
+        document.getElementById('favCount').textContent = favorites.length;
+    }
+
+    function toggleFavFilter() {
+        showOnlyFavs = !showOnlyFavs;
+        document.getElementById('filterFavBtn').classList.toggle('active', showOnlyFavs);
+        renderGallery();
+    }
+
+    function copyFavorites() {
+        if (favorites.length === 0) {
+            alert('Вы еще не отметили ни одной фотографии сердечком.');
+            return;
+        }
+        const text = "Отобранные фото (" + favorites.length + " шт.):\n" + favorites.join("\n");
+        navigator.clipboard.writeText(text).then(() => {
+            alert('Список имен файлов скопирован! Отправьте его фотографу в мессенджер.');
+        });
+    }
+
+    function openLightbox(photoId) {
+        currentIndex = photos.findIndex(p => p.id === photoId);
+        updateLightbox();
+        document.getElementById('lightbox').classList.add('open');
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('open');
+    }
+
+    function changePhoto(step) {
+        currentIndex = (currentIndex + step + photos.length) % photos.length;
+        updateLightbox();
+    }
+
+    function updateLightbox() {
+        const photo = photos[currentIndex];
+        document.getElementById('lbImg').src = thumbUrl(photo.id, 2000);
+        document.getElementById('lbCaption').textContent =
+            photo.name + " (" + (currentIndex + 1) + " из " + photos.length + ")";
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (!document.getElementById('lightbox').classList.contains('open')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') changePhoto(1);
+        if (e.key === 'ArrowLeft') changePhoto(-1);
+    });
+
+    loadPhotos();
 </script>
 
 </body>
